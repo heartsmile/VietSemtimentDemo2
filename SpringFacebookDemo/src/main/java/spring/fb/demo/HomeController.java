@@ -1,8 +1,5 @@
 package spring.fb.demo;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -12,17 +9,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import spring.fb.demo.dto.PostData;
-import spring.fb.demo.spellchecker.Checker;
-import spring.fb.demo.vietsentiment.VietSentiData;
-import vn.hus.nlp.tokenizer.VietTokenizer;
+import spring.fb.demo.services.VietSentiService;
 
 import com.restfb.Connection;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
 import com.restfb.Parameter;
 import com.restfb.Version;
-import com.restfb.types.Comment;
 import com.restfb.types.Post;
 
 /**
@@ -35,12 +28,9 @@ public class HomeController {
 			.getLogger(HomeController.class);
 	
 	private FacebookClient facebookClient23;
-	private VietTokenizer tokenizer = new VietTokenizer();
-	private Checker check = new Checker();
+	
+	private VietSentiService vsService;
 
-	/**
-	 * Simply selects the home view to render by returning its name.
-	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Model model) {
 		logger.info("Welcome home!");
@@ -59,10 +49,7 @@ public class HomeController {
 
 		facebookClient23 = new DefaultFacebookClient(userAT,
 				Version.VERSION_2_3);
-		
-		//Viet Sentiment
-		VietSentiData.init();
-		
+
 		if (pageID == null || pageID == "") {
 			
 			//get user's feed
@@ -75,12 +62,10 @@ public class HomeController {
 					Post.class, Parameter.with("limit", 100));
 
 		}
-		/*if (listPosts.getData().get(1).getComments() != null) {
-			for (Comment comment : listPosts.getData().get(1).getComments()
-					.getData()) {
-				System.out.println(comment.getMessage());
-			}
-		}*/
+		
+		vsService = new VietSentiService();
+		vsService.SentimentDemo();
+		
 
 		for(Post post : listPosts.getData()){
 			if(post.getCommentsCount() > 0){

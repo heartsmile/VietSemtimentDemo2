@@ -31,5 +31,6 @@
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/vn.hus.nlp.fsm-1.0.0.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/vn.hus.nlp.tokenizer-4.1.1.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/vn.hus.nlp.utils-1.0.0.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/demoVietSentiment.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

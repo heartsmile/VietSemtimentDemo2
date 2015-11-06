@@ -1,5 +1,10 @@
 package spring.fb.demo;
 
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -10,13 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import spring.fb.demo.services.VietSentiService;
+import app.server.handling.ServerInterf;
 
-import com.restfb.Connection;
-import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
-import com.restfb.Parameter;
-import com.restfb.Version;
-import com.restfb.types.Post;
 
 /**
  * Handles requests for the application home page.
@@ -29,20 +30,45 @@ public class HomeController {
 	
 	private FacebookClient facebookClient23;
 	
+	//@Autowired
 	private VietSentiService vsService;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Model model) {
 		logger.info("Welcome home!");
-
+		ServerInterf server;
+		Registry myRegis;
+		try {
+			myRegis = LocateRegistry.getRegistry("127.0.0.1");
+			server = (ServerInterf) myRegis.lookup("server");
+		} catch (RemoteException e) {
+			server = null;
+		} catch (NotBoundException e) {
+			server = null;
+		}
+		
+		if(server != null){
+			try {
+				System.out.println("qtran: " + server.hello());
+				
+				System.out.println("This is a demo: " + server.runAnalyze("Hôm nay anh không vui và cũng không hạnh phúc tí nào em à!"));
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		//vsService = new VietSentiService();
 		return "home";
 	}
 
 	@RequestMapping(value = "/submitAccessToken", method = RequestMethod.POST)
 	public String ProcessAccessToken(Model model, HttpServletRequest req) {
 		logger.info("Process form");
+		
+		//vsService = new VietSentiService();
+		//vsService.SentimentDemo();
 
-		Connection<Post> listPosts;
+		/*Connection<Post> listPosts;
 
 		String userAT = req.getParameter("userAccessToken");
 		String pageID = req.getParameter("pageID");
@@ -63,8 +89,7 @@ public class HomeController {
 
 		}
 		
-		vsService = new VietSentiService();
-		vsService.SentimentDemo();
+		
 		
 
 		for(Post post : listPosts.getData()){
@@ -73,7 +98,7 @@ public class HomeController {
 			}
 		}
 		
-		model.addAttribute("listPosts", listPosts.getData());
+		model.addAttribute("listPosts", listPosts.getData());*/
 
 		return "home";
 	}

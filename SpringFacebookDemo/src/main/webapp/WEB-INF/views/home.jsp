@@ -34,16 +34,16 @@
 	<c:if test="${pageName != null}">
 		<h4>Feed for page: <c:out value="${pageName}"/></h4>
 	</c:if>
-	<c:if test="${listPosts != null }">
+	<c:if test="${listPostDatas != null }">
 		<table border="1">
 			<% int i = 0; %>
-			<c:forEach items="${listPosts}" var="item">
+			<c:forEach items="${listPostDatas}" var="item">
 				<tr>
 					<c:if test="${item.message != null}">
 						<td>Posts <%=i++ %></td>
 						<td><c:out value="${item.message}"></c:out></td>
 						<td><c:out value="${item.likesCount}"></c:out></td>
-						<td><c:out value="${item.createdTime}"></c:out></td>
+						<td><c:out value="${item.sentimentScore}"></c:out></td>
 					</c:if>
 				</tr>
 			</c:forEach>

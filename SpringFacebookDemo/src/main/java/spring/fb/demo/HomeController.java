@@ -39,7 +39,7 @@ public class HomeController {
 	private static final Logger logger = LoggerFactory
 			.getLogger(HomeController.class);
 
-	private static final int MAX_POST_LIMITED = 2;
+	private static final int MAX_POST_LIMITED = 50;
 
 	private FacebookClient facebookClient23;
 	private ServerInterf server;
@@ -129,18 +129,16 @@ public class HomeController {
 			postData.setStory(post.getStory());
 			postData.setUpdatedTime(post.getUpdatedTime());
 			try {
-				postData.setSentimentScore(server.runAnalyzeSentiment(
-						post.getDescription() != null ? post.getDescription()
-								: "" + " " + post.getMessage() != null ? post
-										.getMessage() : "" + " "
-										+ post.getCaption() != null ? post
-										.getCaption() : "" + " "
-										+ post.getStory() != null ? post
-										.getStory() : "", true));
+				StringBuffer bufferItem = new StringBuffer();
+				
+				bufferItem.append(post.getDescription() != null ? post.getDescription() : "");
+				bufferItem.append(post.getMessage() != null ? post.getMessage() : "");
+				bufferItem.append(post.getCaption() != null ? post.getCaption() : "");
+				bufferItem.append(post.getStory() != null ? post.getStory() : "");
 
 				// analyze all comments
 				if (post.getCommentsCount() > 0) {
-					StringBuffer bufferItem = new StringBuffer();
+					
 					for (Comment cmt : post.getComments().getData()) {
 						bufferItem.append(". ");
 						bufferItem.append(cmt.getMessage());
@@ -151,10 +149,10 @@ public class HomeController {
 							}
 						}
 					}
-					postData.setSentimentScore(postData.getSentimentScore()
-							+ server.runAnalyzeSentiment(bufferItem.toString(),
-									true));
 				}
+				postData.setSentimentScore(postData.getSentimentScore()
+						+ server.runAnalyzeSentiment(bufferItem.toString(),
+								true));
 			} catch (RemoteException e) {
 				e.printStackTrace();
 				return "error";

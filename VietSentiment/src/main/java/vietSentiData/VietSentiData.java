@@ -212,17 +212,22 @@ public class VietSentiData implements Serializable {
 	public static double scoreTokens(String[] words) {
 
 		double totalScore = 0.0;
-
+		//qtran
+		//flag to check if the previous is a negative word
+		boolean isNegativeBefore = false;
 		for (String word : words) {
+			isNegativeBefore = false;
 			for (String str : word.split(" ")) {
 				double senti = extract(str);
 				if (dictNegative.contains(str)) {
-					
-					//TO-DO: change the following word's score to *-1
-					
-					senti *= -1.0;
+					isNegativeBefore = true;
+					continue;
 				}
-				totalScore += senti;
+				if(isNegativeBefore) {
+					totalScore += (senti*-1);
+					isNegativeBefore = false;
+				}
+				
 			}
 		}
 		return totalScore;

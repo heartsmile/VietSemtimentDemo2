@@ -1,5 +1,7 @@
 package spellcheker;
 
+import utils.SparkUtil;
+
 /**
  * Check spelling of String[] input
  * @author thaint
@@ -14,6 +16,7 @@ public class Checker {
 	 * default constructor
 	 */
 	public Checker(){
+		SparkUtil.createJavaSparkContext();
 		Dictionary.init();
 	}
 	

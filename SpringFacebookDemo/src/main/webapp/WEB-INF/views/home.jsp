@@ -17,11 +17,17 @@
 		<tr>
 			<td><h3>Input your access token</h3></td>
 		</tr>
-		<tr>
-			<td><label>User access token:</label></td><td><input name="userAccessToken" type="text" maxlength="300" required="required" placeholder="User access token"></td>
-			<td><label>Page ID:</label></td><td><input name="pageID" type="text" maxlength="50" placeholder="Page ID"></td>
-		</tr>
-		<tr>
+			<tr>
+				<td><label>User access token:</label></td>
+				<td><input name="userAccessToken" type="text" maxlength="300"
+					required="required" placeholder="User access token"
+					value="CAACEdEose0cBABWZCHuVzNZC9ZBVy3pwp10tUf2dD9sxZA6PVWVtVOx27r0vT7HWEBmVD39tUI7AmFZC4AWnrLxdgbl0BikRElMRubK0gmDoH8KAeXM2Qhgswb36AXw4y80sZChYC3GIXWGaaiZAYsWCUYsvIh639DpZBwRbBwog2XZCVuGRJDxVDs4ZAZBWKRWSDbTMI6NfzZC3orrESBD4D6rS"></td>
+				<td><label>Page ID:</label></td>
+				<td><input name="pageID" type="text" maxlength="50"
+					placeholder="Page ID"
+					value="485290711519463"></td>
+			</tr>
+			<tr>
 			<td><input type="submit" name="Submit" value="Submit"/></td>
 		</tr>
 	</table>

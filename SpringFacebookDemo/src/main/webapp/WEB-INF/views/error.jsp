@@ -7,6 +7,7 @@
 <title>Error</title>
 </head>
 <body>
-	<h1 style="color: blue;" align="center">Server not found</h1>
+	<h1 style="color: blue;" align="center">System error</h1>
+	<p>${errorDetail}</p>
 </body>
 </html>

@@ -16,7 +16,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import spring.fb.demo.dto.PageInfo;
 import spring.fb.demo.dto.PostData;
 import app.server.handling.ServerInterf;
 
@@ -28,7 +27,6 @@ import com.restfb.Version;
 import com.restfb.types.Comment;
 import com.restfb.types.Post;
 import com.restfb.types.User;
-import com.restfb.types.Page;
 
 /**
  * Handles requests for the application home page.
@@ -39,7 +37,7 @@ public class HomeController {
 	private static final Logger logger = LoggerFactory
 			.getLogger(HomeController.class);
 
-	private static final int MAX_POST_LIMITED = 50;
+	private static final int MAX_POST_LIMITED = 100;
 
 	private FacebookClient facebookClient23;
 	private ServerInterf server;
@@ -150,11 +148,11 @@ public class HomeController {
 						}
 					}
 				}
-				postData.setSentimentScore(postData.getSentimentScore()
-						+ server.runAnalyzeSentiment(bufferItem.toString(),
+				postData.setSentimentScore(server.runAnalyzeSentiment(bufferItem.toString(),
 								true));
-			} catch (RemoteException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
+				req.getSession().setAttribute("errorDetail", e.getMessage());
 				return "error";
 			}
 

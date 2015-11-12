@@ -37,7 +37,7 @@ public class HomeController {
 	private static final Logger logger = LoggerFactory
 			.getLogger(HomeController.class);
 
-	private static final int MAX_POST_LIMITED = 100;
+	private static final int MAX_POST_LIMITED = 20;
 
 	private FacebookClient facebookClient23;
 	private ServerInterf server;
@@ -116,26 +116,26 @@ public class HomeController {
 
 		for (Post post : listPosts.getData()) {
 			postData = new PostData();
-			postData.setCaption(post.getCaption());
+			postData.setCaption(post.getCaption() != null ? post.getCaption().replaceAll("\\d","") : "");
 			postData.setComments(post.getComments());
 			postData.setCreatedTime(post.getCreatedTime());
-			postData.setDescription(post.getDescription());
+			postData.setDescription(post.getDescription() != null ? post.getDescription().replaceAll("\\d","") : "");
 			postData.setLikes(post.getLikes());
 			postData.setLikesCount(post.getLikesCount());
-			postData.setMessage(post.getMessage());
+			postData.setMessage(post.getMessage() != null ? post.getMessage().replaceAll("\\d","") : "");
 			postData.setPostID(post.getId());
-			postData.setStory(post.getStory());
+			postData.setStory(post.getStory() != null ? post.getStory().replaceAll("\\d","") : "");
 			postData.setUpdatedTime(post.getUpdatedTime());
 			try {
 				StringBuffer bufferItem = new StringBuffer();
 				
-				bufferItem.append(post.getDescription() != null ? post.getDescription().replaceAll("[^0-9]", "") : "");
-				bufferItem.append(post.getMessage() != null ? post.getMessage().replaceAll("[^0-9]", "") : "");
-				bufferItem.append(post.getCaption() != null ? post.getCaption().replaceAll("[^0-9]", "") : "");
-				bufferItem.append(post.getStory() != null ? post.getStory().replaceAll("[^0-9]", "") : "");
+				bufferItem.append(post.getDescription() != null ? postData.getDescription() : "");
+				bufferItem.append(post.getMessage() != null ? postData.getMessage() : "");
+				bufferItem.append(post.getCaption() != null ? postData.getCaption() : "");
+				bufferItem.append(post.getStory() != null ? postData.getStory() : "");
 
 				// analyze all comments
-				if (post.getCommentsCount() > 0) {
+				/*if (post.getCommentsCount() > 0) {
 					
 					for (Comment cmt : post.getComments().getData()) {
 						bufferItem.append(". ");
@@ -143,11 +143,13 @@ public class HomeController {
 						if (cmt.getCommentCount() > 0) {
 							for (Comment subCmt : cmt.getComments().getData()) {
 								bufferItem.append(". ");
-								bufferItem.append(subCmt.getMessage());
+								if(subCmt.getMessage() != null){
+									bufferItem.append(subCmt.getMessage().replaceAll("\\d",""));
+								}
 							}
 						}
 					}
-				}
+				}*/
 				postData.setSentimentScore(server.runAnalyzeSentiment(bufferItem.toString(),
 								true));
 			} catch (Exception e) {

@@ -57,7 +57,7 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterf {
 			throws RemoteException {
 
 		if (inputText == null || "".equals(inputText)) {
-			return -3.0;
+			return -6.0;
 		}
 
 		double rs = -3.0;
@@ -67,6 +67,16 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterf {
 				String[] rsCheckSpell = check.correct(tokenizer
 						.tokenize(inputText));
 				rs = VietSentiData.scoreTokens(rsCheckSpell);
+				
+				////////////////////////////////////////////////////
+				/*String temp[] = new String[1];
+				temp[0] = inputText;
+				String[] rsCheckSpell = check.correct(temp);
+				if(rsCheckSpell.length > 0){
+					String[] rsToken = tokenizer.tokenize(rsCheckSpell[0]);
+					rs = VietSentiData.scoreTokens(rsToken);
+				}*/			
+				
 			} catch (Exception ex) {
 				ex.printStackTrace();
 				return -3.0;

@@ -226,6 +226,8 @@ public class VietSentiData implements Serializable {
 				if(isNegativeBefore) {
 					totalScore += (senti*-1);
 					isNegativeBefore = false;
+				} else {
+					totalScore += senti;
 				}
 				
 			}

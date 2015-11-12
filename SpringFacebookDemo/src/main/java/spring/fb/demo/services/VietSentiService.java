@@ -3,9 +3,6 @@
  */
 package spring.fb.demo.services;
 
-import main.ExtractOpinion;
-import vn.hus.nlp.tokenizer.VietTokenizer;
-
 /**
  * @author QuanTA5
  *
@@ -13,10 +10,8 @@ import vn.hus.nlp.tokenizer.VietTokenizer;
 //@Component
 public class VietSentiService {
 		
-	private VietTokenizer tokenizer;
 	
 	public VietSentiService(){
-		tokenizer = new VietTokenizer();
 		
 		//ExtractOpinion eoDemo = new ExtractOpinion();
 		//System.out.println("" + ExtractOpinion.runAnalyze("Hôm nay anh không được vui lắm em à, anh nhớ em nhiều lắm!"));

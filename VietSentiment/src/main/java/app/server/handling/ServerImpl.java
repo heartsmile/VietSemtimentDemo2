@@ -39,7 +39,7 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterf {
 		super();
 		try {
 			SparkUtil.createJavaSparkContext();
-			tokenizer = new VietTokenizer();
+			tokenizer = new VietTokenizer("tokenizer.properties");
 			check = new Checker();
 			VietSentiData.init();
 		} catch (Exception e) {

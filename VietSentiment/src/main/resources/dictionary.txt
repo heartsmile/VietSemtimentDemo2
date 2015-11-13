@@ -38,9 +38,7 @@ chài	trời
 troy	trời
 mềnh	mình
 bi h	bây giờ
-m	em
 e	em
-n	anh
 a	anh
 aj	ai
 bj	bi
@@ -468,7 +466,6 @@ qunh	quanh
 qanh	quanh
 qay	quay
 qang	quang
-thu	thua
 chiện	chuyện
 triện	truyện
 hịn	huyện
@@ -701,3 +698,34 @@ chuộg	chuộng
 ràg	ràng
 lặg	lặng
 vug	vung
+:)	mỉm cười
+:D	vui vẻ
+:))	cười to
+:3	bĩu môi
+:-*	hôn
+:v	cười đểu
+^^	ngại
+:?	thắc mắc
+(y)	thích
+<3	yêu
+@@	ngạc nhiên
+:/	không chắc
+:\	băn khoăn
+;(	khóc
+:(	buồn
+:(( rất buồn
+:s	thắc mắc
+:p	trêu chọc
+=D	vui vẻ
+:0	giật mình
+;)	nháy mắt
+>:(	nhăn nhó
+:'(	khóc
+^_^	tinh nghịch
+8-)	ngầu
+B|	sành điệu
+3:)	nguy hiểm
+O:)	dễ thương
+-_-	liếc mắt
+o.O	khó hiểu
+>:o	buồn bã

@@ -1,6 +1,7 @@
 package spellcheker;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.apache.spark.api.java.JavaPairRDD;
@@ -78,16 +79,22 @@ public class Dictionary {
 		charSet = new HashSet<>();
 		vowels = new HashSet<>();
 		consonants = new HashSet<>();
-
-		for (int i = 0; i < charSetFile.collect().size(); i++) {
-			for (char c : charSetFile.collect().get(i).toCharArray())
-				if (c != ' ' && c != '\t') {
-					charSet.add(c);
-					if (i == 0)
-						vowels.add(c);
-					else if (i == 1)
-						consonants.add(c);
-				}
+		//debug
+		List<String> tmp = charSetFile.collect();
+		//qtran
+		if(charSetFile.collect() != null){ 
+			for (int i = 0; i < charSetFile.collect().size(); i++) {
+				for (char c : charSetFile.collect().get(i).toCharArray())
+					if (c == ' ' || c == '\t') {
+						//ignore
+					} else {
+						charSet.add(c);
+						if (i == 0)
+							vowels.add(c);
+						else if (i == 1)
+							consonants.add(c);
+					}
+			}
 		}
 	}
 

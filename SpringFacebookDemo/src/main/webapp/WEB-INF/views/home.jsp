@@ -21,7 +21,7 @@
 				<td><label>User access token:</label></td>
 				<td><input name="userAccessToken" type="text" maxlength="300"
 					required="required" placeholder="User access token"
-					value="CAACEdEose0cBAA5XrCjlZBwlwsZAmYCmGNdwOdkbRe5uqLe6y8tQi3n0siYpZC0BDgsKYBx9VpZBNNcw3RPnQTZCWD0Mb2XdsT6NuKirvMab9nVa04Ndp8TBZBDbyJ4w7aZCA1J6fdiKAKkZBvncCCwhYmzBVesPhCl3M6JDJLf99t0ync2At1aKs2WjGRID5ZAQRqrDNGnZCWeodYIv5i0val"></td>
+					value="CAACEdEose0cBAL1RC2ZAsicmxahtentYACDnqeuB9MrmaPhZC6HDTc06AYnaEaaAnvTXc70nZBj8kwLWcZC0dIf7cMGlyfFQSO3OWZCzjQ2VIPdt1QiyRWesUJ8EZCX5cfXAMZBi9OjECR20AS8bBpNKf6L4ZBO4UhPjLR1358SZBoCjjZBgiSlHLH0pcMsrMpcPk9fiiGZAkgZCRc34mr11SqqL"></td>
 				<td><label>Page ID:</label></td>
 				<td><input name="pageID" type="text" maxlength="50"
 					placeholder="Page ID"

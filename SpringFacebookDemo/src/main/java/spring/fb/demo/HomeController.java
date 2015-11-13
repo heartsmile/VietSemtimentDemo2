@@ -116,23 +116,23 @@ public class HomeController {
 
 		for (Post post : listPosts.getData()) {
 			postData = new PostData();
-			postData.setCaption(post.getCaption() != null ? post.getCaption().replaceAll("\\d","") : "");
+			postData.setCaption(post.getCaption() != null ? post.getCaption()/*.replaceAll("\\d","")*/ : "");
 			postData.setComments(post.getComments());
 			postData.setCreatedTime(post.getCreatedTime());
-			postData.setDescription(post.getDescription() != null ? post.getDescription().replaceAll("\\d","") : "");
+			postData.setDescription(post.getDescription() != null ? post.getDescription()/*.replaceAll("\\d","")*/ : "");
 			postData.setLikes(post.getLikes());
 			postData.setLikesCount(post.getLikesCount());
-			postData.setMessage(post.getMessage() != null ? post.getMessage().replaceAll("\\d","") : "");
+			postData.setMessage(post.getMessage() != null ? post.getMessage()/*.replaceAll("\\d","")*/ : "");
 			postData.setPostID(post.getId());
-			postData.setStory(post.getStory() != null ? post.getStory().replaceAll("\\d","") : "");
+			postData.setStory(post.getStory() != null ? post.getStory()/*.replaceAll("\\d","")*/ : "");
 			postData.setUpdatedTime(post.getUpdatedTime());
 			try {
 				StringBuffer bufferItem = new StringBuffer();
 				
-				bufferItem.append(post.getDescription() != null ? postData.getDescription() : "");
-				bufferItem.append(post.getMessage() != null ? postData.getMessage() : "");
-				bufferItem.append(post.getCaption() != null ? postData.getCaption() : "");
-				bufferItem.append(post.getStory() != null ? postData.getStory() : "");
+				bufferItem.append(post.getDescription() != null ? postData.getDescription().replaceAll("\\d","") : "");
+				bufferItem.append(post.getMessage() != null ? postData.getMessage().replaceAll("\\d","") : "");
+				bufferItem.append(post.getCaption() != null ? postData.getCaption().replaceAll("\\d","") : "");
+				bufferItem.append(post.getStory() != null ? postData.getStory().replaceAll("\\d","") : "");
 
 				// analyze all comments
 				/*if (post.getCommentsCount() > 0) {

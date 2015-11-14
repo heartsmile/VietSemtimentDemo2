@@ -9,5 +9,5 @@ public interface ServerInterf extends Remote {
 	public String hello() throws RemoteException;
 
 	public double runAnalyzeSentiment(String inputText, boolean isNeedToCheck) throws RemoteException;
-	public String[] runSpellCheck(String inputText) throws RemoteException;
+	public String[] runSpellCheckAndToken(String inputText) throws RemoteException;
 }

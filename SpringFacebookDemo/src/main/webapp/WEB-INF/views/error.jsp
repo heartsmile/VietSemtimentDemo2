@@ -8,6 +8,6 @@
 </head>
 <body>
 	<h1 style="color: blue;" align="center">System error</h1>
-	<p>${errorDetail}</p>
+	<p style="color: red;">${errorDetail}</p>
 </body>
 </html>

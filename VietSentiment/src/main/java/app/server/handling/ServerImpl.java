@@ -64,38 +64,45 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterf {
 		if (isNeedToCheck) {
 			// check spell
 			try {
-				String[] rsCheckSpell = check.correct(tokenizer
+				/*String[] rsCheckSpell = check.correct(tokenizer
 						.tokenize(inputText));
 				rs = VietSentiData.scoreTokens(rsCheckSpell);
-				
+				*/
 				////////////////////////////////////////////////////
-				/*String temp[] = new String[1];
-				temp[0] = inputText;
-				String[] rsCheckSpell = check.correct(temp);
-				if(rsCheckSpell.length > 0){
-					String[] rsToken = tokenizer.tokenize(rsCheckSpell[0]);
-					rs = VietSentiData.scoreTokens(rsToken);
-				}*/			
+				String[] rsCheckedAndToken = runSpellCheckAndToken(inputText);
+				if(rsCheckedAndToken.length > 0){
+					rs = VietSentiData.scoreTokens(rsCheckedAndToken);
+				}			
 				
 			} catch (Exception ex) {
 				ex.printStackTrace();
 				return -3.0;
 			}
 		} else {
-			String arrayString[] = new String[1];
-			arrayString[0] = inputText;
-			rs = VietSentiData.scoreTokens(arrayString);
+			rs = VietSentiData.scoreTokens(tokenizer.tokenize(inputText));
 		}
 
 		return rs;
 	}
 
 	@Override
-	public String[] runSpellCheck(String inputText) throws RemoteException {
+	public String[] runSpellCheckAndToken(String inputText) throws RemoteException {
 
 		// check spell
-		String[] rsCheckSpell = check.correct(tokenizer.tokenize(inputText));
-
+		//String[] rsCheckSpell = check.correct(tokenizer.tokenize(inputText));
+		String temp[] = new String[1];
+		temp[0] = inputText.replaceAll("[\n\r]", " ");
+		String[] rsParseEmoticon = check.parseEmoticons(temp);
+		if(rsParseEmoticon != null && rsParseEmoticon.length > 0 && rsParseEmoticon[0] != null){
+			temp = tokenizer.tokenize(rsParseEmoticon[0]);
+		}
+		String[] rsCheckSpell = check.correct(temp);
+		/*String[] rsToken = new String[1];
+		if(rsCheckSpell.length > 0){
+			rsToken = tokenizer.tokenize(rsCheckSpell[0]);
+			//rs = VietSentiData.scoreTokens(rsToken);
+		}
+*/
 		return rsCheckSpell;
 	}
 }

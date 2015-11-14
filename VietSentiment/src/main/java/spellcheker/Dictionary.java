@@ -18,9 +18,11 @@ import utils.SparkUtil;
  *
  */
 public class Dictionary {
-	private final static String DICTIONARYPATH = "./src/main/resources/dictionary.csv";
+	private final static String DICTIONARYPATH = "./src/main/resources/dictionary.txt";
+	private final static String EMOTICONPATH = "./src/main/resources/emoticon.txt";
 	private final static String CHARSETPATH = "./src/main/resources/vietcharset.txt";
 	private static JavaPairRDD<String, String> dict;
+	private static JavaPairRDD<String, String> emoticon;
 	private static Set<Character> charSet;
 	private static Set<Character> vowels, consonants;
 
@@ -32,7 +34,29 @@ public class Dictionary {
 	public static void init() {
 		sc = SparkUtil.getJavaSparkContext();
 		readDictionaryFromFile(DICTIONARYPATH);
+		readEmoticonFromFile(EMOTICONPATH);
 		readCharSetFromFile(CHARSETPATH);
+	}
+
+	private static void readEmoticonFromFile(String emoticonpath) {
+		JavaRDD<String> emoticonFile = sc.textFile(emoticonpath);
+
+		emoticon = emoticonFile
+				.mapToPair(new PairFunction<String, String, String>() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public Tuple2<String, String> call(String text)
+							throws Exception {
+						if(text.split("\t").length > 1){
+							return new Tuple2<String, String>(text.split("\t")[0],
+								text.split("\t")[1]);
+						} else {
+							return new Tuple2<String, String>("","");
+						}
+					}
+				});
+		
 	}
 
 	/**
@@ -49,9 +73,12 @@ public class Dictionary {
 					@Override
 					public Tuple2<String, String> call(String text)
 							throws Exception {
-
-						return new Tuple2<String, String>(text.split("\t")[0],
+						if(text.split("\t").length > 1){
+							return new Tuple2<String, String>(text.split("\t")[0],
 								text.split("\t")[1]);
+						} else {
+							return new Tuple2<String, String>("","");
+						}
 					}
 				});
 	}
@@ -62,11 +89,26 @@ public class Dictionary {
 	 * @return correctWord String
 	 */
 	public static String getDefination(String word) {
-
-		if (dict.lookup(word) != null && !dict.lookup(word).isEmpty())
-			return dict.lookup(word).get(0);
-		else
-			return word;
+		//qtran
+		List<String> foundList = dict.lookup(word.trim().toLowerCase());
+		if (foundList != null && !foundList.isEmpty()){
+			return foundList.get(0);
+		}
+		return word;
+	}
+	
+	/**
+	 * get the correct meaning of sign word
+	 * @param word String
+	 * @return correctWord String
+	 */
+	public static String getEmoticonDefination(String emo) {
+		//qtran
+		List<String> foundList = emoticon.lookup(emo != null ? emo.trim() : "");
+		if (foundList != null && !foundList.isEmpty()){
+			return foundList.get(0);
+		}
+		return emo;
 	}
 
 	/**
@@ -79,8 +121,6 @@ public class Dictionary {
 		charSet = new HashSet<>();
 		vowels = new HashSet<>();
 		consonants = new HashSet<>();
-		//debug
-		List<String> tmp = charSetFile.collect();
 		//qtran
 		if(charSetFile.collect() != null){ 
 			for (int i = 0; i < charSetFile.collect().size(); i++) {
@@ -104,7 +144,8 @@ public class Dictionary {
 	 * @return boolean
 	 */
 	public static boolean isVietnameseCharacter(char c) {
-		return charSet.contains(c);
+		//qtran
+		return charSet.contains(Character.toLowerCase(c));
 	}
 
 	/**

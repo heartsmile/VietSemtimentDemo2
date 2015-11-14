@@ -129,10 +129,10 @@ public class HomeController {
 			try {
 				StringBuffer bufferItem = new StringBuffer();
 				
-				bufferItem.append(post.getDescription() != null ? postData.getDescription().replaceAll("\\d","") : "");
-				bufferItem.append(post.getMessage() != null ? postData.getMessage().replaceAll("\\d","") : "");
-				bufferItem.append(post.getCaption() != null ? postData.getCaption().replaceAll("\\d","") : "");
-				bufferItem.append(post.getStory() != null ? postData.getStory().replaceAll("\\d","") : "");
+				bufferItem.append(post.getDescription() != null ? postData.getDescription() : "");
+				bufferItem.append(post.getMessage() != null ? postData.getMessage() : "");
+				bufferItem.append(post.getCaption() != null ? postData.getCaption() : "");
+				bufferItem.append(post.getStory() != null ? postData.getStory() : "");
 
 				// analyze all comments
 				/*if (post.getCommentsCount() > 0) {

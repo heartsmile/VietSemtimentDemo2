@@ -298,7 +298,6 @@ dim	diêm
 him	hiểm
 lim	liêm
 nim	niêm
-tim	tiêm
 vim	viêm
 nghim	nghiêm
 bin	biên
@@ -309,16 +308,14 @@ lin	liên
 min	miên
 nin	niên
 sing	siêng
-tin	tiên
 tín	tiến
 tỉn	tiển
 tìn	tiền
 vin	viên
 vịn	viện
 vĩn	viễn
-xin	xiên
 chin	chiên
-chín	chiến
+
 phin	phiên
 thin	thiên
 nghing	nghiêng
@@ -698,34 +695,10 @@ chuộg	chuộng
 ràg	ràng
 lặg	lặng
 vug	vung
-:)	mỉm cười
-:D	vui vẻ
-:))	cười to
-:3	bĩu môi
-:-*	hôn
-:v	cười đểu
-^^	ngại
-:?	thắc mắc
-(y)	thích
-<3	yêu
-@@	ngạc nhiên
-:/	không chắc
-:\	băn khoăn
-;(	khóc
-:(	buồn
-:(( rất buồn
-:s	thắc mắc
-:p	trêu chọc
-=D	vui vẻ
-:0	giật mình
-;)	nháy mắt
->:(	nhăn nhó
-:'(	khóc
-^_^	tinh nghịch
-8-)	ngầu
-B|	sành điệu
-3:)	nguy hiểm
-O:)	dễ thương
--_-	liếc mắt
-o.O	khó hiểu
->:o	buồn bã
+y	yêu
+r	rồi
+ny	người yêu
+nt	nhắn tin
+c	chị
+cmt	bình luận
+sv	sinh viên

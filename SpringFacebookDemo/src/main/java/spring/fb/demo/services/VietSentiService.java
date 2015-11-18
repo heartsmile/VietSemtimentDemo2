@@ -3,6 +3,7 @@
  */
 package spring.fb.demo.services;
 
+
 /**
  * @author QuanTA5
  *
@@ -11,11 +12,6 @@ package spring.fb.demo.services;
 public class VietSentiService {
 		
 	
-	public VietSentiService(){
-		
-		//ExtractOpinion eoDemo = new ExtractOpinion();
-		//System.out.println("" + ExtractOpinion.runAnalyze("Hôm nay anh không được vui lắm em à, anh nhớ em nhiều lắm!"));
-	}
 	
 	/*public static void main(String[] args) {
 		SparkUtil.createJavaSparkContext();

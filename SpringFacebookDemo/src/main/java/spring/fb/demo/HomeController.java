@@ -5,7 +5,9 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -79,14 +81,14 @@ public class HomeController {
 	public String ProcessAccessToken(Model model, HttpServletRequest req) {
 		logger.info("Process form");
 
-		Connection<Post> listPosts;
-
+		HashMap<String,Connection<Post>> pagesPosts = new HashMap<String, Connection<Post>>();
+		
 		String userAT = req.getParameter("userAccessToken");
 		String pageID = req.getParameter("pageID");
 
-		facebookClient23 = new DefaultFacebookClient(userAT,
-				Version.VERSION_2_3);
-
+		facebookClient23 = new DefaultFacebookClient(userAT, Version.VERSION_2_3);
+		Connection<Post> listPosts;
+		
 		if (pageID == null || pageID == "") {
 
 			// get user's feed
@@ -100,65 +102,66 @@ public class HomeController {
 				req.setAttribute("userID", userName);
 			}
 		} else {
-
-			// get page's feed
-			listPosts = facebookClient23.fetchConnection(pageID + "/feed",
-					Post.class, Parameter.with("limit", MAX_POST_LIMITED));
-			/*
-			 * PageInfo page = facebookClient23.fetchObject("485290711519463",
-			 * PageInfo.class, Parameter.with(null, null)); if(page != null){
-			 * req.setAttribute("userID", page.getPageName()); }
-			 */
+			String listPageID[] = pageID.split(",");
+			
+			for (String idItem : listPageID) {
+				listPosts = facebookClient23.fetchConnection(idItem.trim() + "/feed",
+						Post.class, Parameter.with("limit", MAX_POST_LIMITED));
+				pagesPosts.put(idItem, listPosts);
+			}
 		}
 
 		List<PostData> listPostDatas = new ArrayList<>();
 		PostData postData;
-
-		for (Post post : listPosts.getData()) {
-			postData = new PostData();
-			postData.setCaption(post.getCaption() != null ? post.getCaption()/*.replaceAll("\\d","")*/ : "");
-			postData.setComments(post.getComments());
-			postData.setCreatedTime(post.getCreatedTime());
-			postData.setDescription(post.getDescription() != null ? post.getDescription()/*.replaceAll("\\d","")*/ : "");
-			postData.setLikes(post.getLikes());
-			postData.setLikesCount(post.getLikesCount());
-			postData.setMessage(post.getMessage() != null ? post.getMessage()/*.replaceAll("\\d","")*/ : "");
-			postData.setPostID(post.getId());
-			postData.setStory(post.getStory() != null ? post.getStory()/*.replaceAll("\\d","")*/ : "");
-			postData.setUpdatedTime(post.getUpdatedTime());
-			try {
-				StringBuffer bufferItem = new StringBuffer();
-				
-				bufferItem.append(post.getDescription() != null ? postData.getDescription() : "");
-				bufferItem.append(post.getMessage() != null ? postData.getMessage() : "");
-				bufferItem.append(post.getCaption() != null ? postData.getCaption() : "");
-				bufferItem.append(post.getStory() != null ? postData.getStory() : "");
-
-				// analyze all comments
-				/*if (post.getCommentsCount() > 0) {
+		
+		for( Entry<String, Connection<Post>> item : pagesPosts.entrySet()){
+			System.out.println("Working with page: " + item.getKey());
+			for (Post post : item.getValue().getData()) {
+				postData = new PostData();
+				postData.setCaption(post.getCaption() != null ? post.getCaption()/*.replaceAll("\\d","")*/ : "");
+				postData.setComments(post.getComments());
+				postData.setCreatedTime(post.getCreatedTime());
+				postData.setDescription(post.getDescription() != null ? post.getDescription()/*.replaceAll("\\d","")*/ : "");
+				postData.setLikes(post.getLikes());
+				postData.setLikesCount(post.getLikesCount());
+				postData.setMessage(post.getMessage() != null ? post.getMessage()/*.replaceAll("\\d","")*/ : "");
+				postData.setPostID(post.getId());
+				postData.setStory(post.getStory() != null ? post.getStory()/*.replaceAll("\\d","")*/ : "");
+				postData.setUpdatedTime(post.getUpdatedTime());
+				try {
+					StringBuffer bufferItem = new StringBuffer();
 					
-					for (Comment cmt : post.getComments().getData()) {
-						bufferItem.append(". ");
-						bufferItem.append(cmt.getMessage());
-						if (cmt.getCommentCount() > 0) {
-							for (Comment subCmt : cmt.getComments().getData()) {
-								bufferItem.append(". ");
-								if(subCmt.getMessage() != null){
-									bufferItem.append(subCmt.getMessage().replaceAll("\\d",""));
+					bufferItem.append(post.getDescription() != null ? postData.getDescription() : "");
+					bufferItem.append(post.getMessage() != null ? postData.getMessage() : "");
+					bufferItem.append(post.getCaption() != null ? postData.getCaption() : "");
+					bufferItem.append(post.getStory() != null ? postData.getStory() : "");
+
+					// analyze all comments
+					if (post.getCommentsCount() > 0) {
+						
+						for (Comment cmt : post.getComments().getData()) {
+							bufferItem.append(". ");
+							bufferItem.append(cmt.getMessage());
+							if (cmt.getCommentCount() > 0) {
+								for (Comment subCmt : cmt.getComments().getData()) {
+									bufferItem.append(". ");
+									if(subCmt.getMessage() != null){
+										bufferItem.append(subCmt.getMessage().replaceAll("\\d",""));
+									}
 								}
 							}
 						}
 					}
-				}*/
-				postData.setSentimentScore(server.runAnalyzeSentiment(bufferItem.toString(),
-								true));
-			} catch (Exception e) {
-				e.printStackTrace();
-				req.getSession().setAttribute("errorDetail", e.getMessage());
-				return "error";
+					postData.setSentimentScore(server.runAnalyzeSentiment(bufferItem.toString(),
+									true));
+				} catch (Exception e) {
+					e.printStackTrace();
+					req.getSession().setAttribute("errorDetail", e.getMessage());
+					return "error";
+				}
+				
+				listPostDatas.add(postData);
 			}
-
-			listPostDatas.add(postData);
 		}
 
 		model.addAttribute("listPostDatas", listPostDatas);

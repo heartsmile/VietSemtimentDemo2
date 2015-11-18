@@ -17,15 +17,15 @@ public class ExtractOpinion {
 			//System.out.println("Corrected: " + server.runSpellCheck(demo));
 			//System.out.println("Score " + server.runAnalyzeSentiment(demo, true));
 			server.start();
-
-			//FileOutputStream out=new FileOutputStream("afterCheck.txt");
-			//PrintWriter output=new PrintWriter(out,true);//auto flush
+/*
+			FileOutputStream out=new FileOutputStream("afterCheck.txt");
+			PrintWriter output=new PrintWriter(out,true);//auto flush
 			//server.runAnalyzeSentiment(demo, false);
-			//String[] test = server.runSpellCheckAndToken(demo);
-			//double rs = server.runAnalyzeSentiment(demo, true);
+			String[] test = server.runSpellCheckAndToken(demo);
+			double rs = server.runAnalyzeSentiment(demo, true);
 			
-			/*for(String a : test){
-				output.println("AQ: " + rs + " ::: " + a);
+			for(String a : test){
+				output.println("QuanTran: " + rs + " ::: " + a);
 			}
 
 			out.close();
